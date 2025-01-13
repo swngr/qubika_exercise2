@@ -5,7 +5,9 @@ This project automates the end-to-end workflow of the Qubika Sports Club Managem
 ### Prerequisites ###
 
 Node.js: Ensure you have Node.js installed (v16+ recommended).
+
 Playwright: Install Playwright via npm.
+
 Axios: For API calls, Axios is included as a dependency.
 
 Dependencies: Ensure you have installed the required dependencies by running npm install.
