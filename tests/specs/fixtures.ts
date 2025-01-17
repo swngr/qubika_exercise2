@@ -27,7 +27,7 @@ export const test = base.extend<{
         if (!user) {
             user = {
                 //email: generateRandomEmail(),
-                email: "sng08@grr.la",
+                email: "sng11@grr.la",
                 password: "Password123",
                 name: "New User",
                 role: "member",

@@ -3,15 +3,11 @@ import { expect } from '@playwright/test';
 import { getCreatedUser } from '../specs/sharedStated';
 
 test.describe('End to End workflow', () => {
-    //const baseURL = 'https://api.club-administration.qa.qubika.com';
     const uiBaseURL = 'https://club-administration.qa.qubika.com/#';
-    //const adminEmail = "test.qubika@qubika.com";
-    //const adminPassword = "12345678";
     
     // Step 1) Create a new user through API and save the user information. Find Qubika Sports Club Management System        
     test('should create a new user successfully (via API)', async ({ createdUser }) => {
-        //expect(createdUser.email).toMatch(/sng07\d+@grr\.la/);
-        expect(createdUser.email).toMatch("sng09@grr.la");
+        expect(createdUser.email).toMatch("sng11@grr.la");
         console.log('New user created:', createdUser.email);
 
         // Access the payload from the shared state
@@ -23,8 +19,10 @@ test.describe('End to End workflow', () => {
     });
 
     test('Should validate Login Page', async ({page}) => {
+
         //Step 2) Go to Qubika Sports Club Management System
         await page.goto(`${uiBaseURL}/auth/login`);
+
         //Step 3) Validate that the login page is displayed correctly
         await expect(page).toHaveURL(`${uiBaseURL}/auth/login`);
         await expect(page.getByPlaceholder('Usuario o correo electrónico')).toBeVisible()
@@ -32,15 +30,12 @@ test.describe('End to End workflow', () => {
         await expect(page.getByRole('button', { name: /Autenticar/ })).toBeVisible()
     })       
 
-    test('Should log in (via UI) with the newly created user and created categories and subcategories', async ({ page }) => {
+    test('Should log in (via UI) with the newly created user and created categories and subcategories', async ({ page, createdUser }) => {
         await page.goto('https://club-administration.qa.qubika.com/#');
-
-        const user = "test.qubika@qubika.com";
-        const pass = "12345678";
         
         // Step 4) Log in with the created user
-        await page.getByPlaceholder('Usuario o correo electrónico').fill(user);
-        await page.getByPlaceholder('Contraseña').fill(pass);
+        await page.getByPlaceholder('Usuario o correo electrónico').fill(createdUser.email);
+        await page.getByPlaceholder('Contraseña').fill(createdUser.password);
         await page.getByRole('button', { name: /Autenticar/ }).click();
         // Wait for navigation or a specific element indicating successful login
         await page.waitForSelector("//*[@class='navbar-nav']//a[contains(@href,'dashboard')]");
